@@ -268,6 +268,10 @@ EOF
 
     radosgw-admin user create --uid=s3_test --display-name="S3 test user" --email=admin@123456.com
 
+    echo ""
+    Press_Start
+    echo ""
+
     ############################################################
 
     ## stop.sh
