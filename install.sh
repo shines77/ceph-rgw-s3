@@ -208,11 +208,15 @@ function Config_Ceph_RGW_for_S3()
     keyring = ${MY_CLUSTER_DIR}/dev/rgw/keyring
     rgw_socket_path = /tmp/radosgw.sock
     log_file = /var/log/radosgw/radosgw.log
-    rgw_frontends = "civetweb port=80"
+    rgw_frontends = "civetweb port=8080"
 EOF
+
+    ############################################################
 
     ceph-mon --mkfs -c ${MY_CLUSTER_DIR}/ceph.conf -i a --monmap=${MY_CLUSTER_DIR}/ceph_monmap.17607 --keyring=${MY_CLUSTER_DIR}/keyring
     ceph-mon -i a -c ${MY_CLUSTER_DIR}/ceph.conf
+
+    ############################################################
 
     ## For osd 0
     rm -rf ${MY_CLUSTER_DIR}/dev/osd0
@@ -250,6 +254,7 @@ EOF
     ceph -c ${MY_CLUSTER_DIR}/ceph.conf -k ${MY_CLUSTER_DIR}/keyring -i ${MY_CLUSTER_DIR}/dev/osd2/keyring auth add osd.2 osd 'allow *' mon 'allow profile osd'
     ceph-osd -i 2 -c ${MY_CLUSTER_DIR}/ceph.conf
 
+    ############################################################
 
     ## For RadosGW
     mkdir -p ${MY_CLUSTER_DIR}/dev/rgw/
@@ -262,6 +267,8 @@ EOF
     radosgw -c ${MY_CLUSTER_DIR}/ceph.conf --keyring=${MY_CLUSTER_DIR}/dev/rgw/keyring --id=radosgw.gateway -d
 
     radosgw-admin user create --uid=s3_test --display-name="S3 test user" --email=admin@123456.com
+
+    ############################################################
 
     ## stop.sh
     killall ceph-osd
