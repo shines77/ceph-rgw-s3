@@ -1,32 +1,27 @@
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
 
-# Precompiled Headers
-*.gch
-*.pch
-
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
-
-# Shared objects (inc. Windows DLLs)
-*.dll
+# C extensions
 *.so
-*.so.*
-*.dylib
 
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
+# Django stuff:
+*.log
 
-# Debug files
-*.dSYM/
+# Backup file
+*.bak
+
+# Ingnore some folders
+/install/
+/packages/
+/unzip/
+/logs/
+
+# ZIP, TAR.GZ, TAR.BZ2, RAR files
+*.zip
+*.rar
+*.tar
+*.tar.gz
+*.tar.bz2
+*.gz
+*.bz2
+*.tgz
+*.tar.z
+*.Z
