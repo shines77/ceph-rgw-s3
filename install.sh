@@ -33,7 +33,10 @@ if [ "${DISTRO}" = "unknow" ]; then
     exit 1
 fi
 
-Display_Welcome()
+. include/random.sh
+. include/network.sh
+
+function Display_Welcome()
 {
     clear
     echo ""
@@ -61,4 +64,10 @@ Display_Welcome
 # Echo_Color_Ex_Test
 
 echo "MY_CLUSTER_DIR = ${MY_CLUSTER_DIR}"
+echo ""
 
+Test_Random
+echo ""
+
+Test_Local_HostInfo
+echo ""

@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # About shell Echo_RGBs()
-
 Color_Text()
 {
     echo -e "\e[0;$2m$1\e[0m"
@@ -38,7 +37,6 @@ Echo_Cyan()
 }
 
 # About shell Echo_RGBs_Ex()
-
 Color_Text_Ex()
 {
     echo -e "$1\e[0;$4m$2\e[0m$3"
@@ -75,7 +73,6 @@ Echo_Cyan_Ex()
 }
 
 # About shell Echo_RGBs_Blod()
-
 Color_Text_Blod()
 {
     echo -e "\e[1;$2m$1\e[0m"
@@ -112,7 +109,6 @@ Echo_Cyan_Blod()
 }
 
 # About shell Echo_RGBs_Blod_Ex()
-
 Color_Text_Blod_Ex()
 {
     echo -e "$1\e[1;$4m$2\e[0m$3"
@@ -149,7 +145,6 @@ Echo_Cyan_Blod_Ex()
 }
 
 # About shell Echo_RGBs_HalfLight()
-
 Color_Text_HL()
 {
     echo -e "\e[2;$2m$1\e[0m"
@@ -186,7 +181,6 @@ Echo_Cyan_HL()
 }
 
 # About shell Echo_RGBs_HalfLight_Ex()
-
 Color_Text_HL_Ex()
 {
     echo -e "$1\e[2;$4m$2\e[0m$3"
@@ -222,8 +216,9 @@ Echo_Cyan_HL_Ex()
     Color_Text_HL_Ex "$1" "$2" "$3" "36"
 }
 
-# This is a echo color test
-
+##
+## This is a echo color test
+##
 Echo_Color_Test()
 {
     echo ""
@@ -258,8 +253,9 @@ Echo_Color_Test()
     echo ""
 }
 
-# This is a echo color extend mode test
-
+##
+## This is a echo color extend mode test
+##
 Echo_Color_Ex_Test()
 {
     local prefix_text=" |  <<<      "
