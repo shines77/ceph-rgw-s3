@@ -83,7 +83,7 @@ function Config_Ceph_RGW_for_S3()
     mkdir -p ${MY_CLUSTER_DIR}
     cd ${MY_CLUSTER_DIR}
     ceph-authtool --create-keyring ${MY_CLUSTER_DIR}/keyring --gen-key -n mon. --cap mon 'allow *'
-    ceph-authtool --gen-key --name=client.admin --set-uid=0 --cap mon 'allow *' --cap osd 'allow *' --cap mds 'allow *' $MY_CLUSTER/keyring
+    ceph-authtool --gen-key --name=client.admin --set-uid=0 --cap mon 'allow *' --cap osd 'allow *' --cap mds 'allow *' ${MY_CLUSTER_DIR}/keyring
     monmaptool --create --clobber --add a ${CEPH_LOCAL_HOSTIP}:6789 --print ${MY_CLUSTER_DIR}/ceph_monmap.17607
 
     mkdir -p ${MY_CLUSTER_DIR}/dev
@@ -97,11 +97,14 @@ function Config_Ceph_RGW_for_S3()
     echo ""
 }
 
-Test_Random
-echo ""
+## Test_Random
+## echo ""
 
 Test_Local_HostInfo
 echo ""
+
+echo "CEPH_LOCAL_HOSTNAME = ${CEPH_LOCAL_HOSTNAME}"
+echo "CEPH_LOCAL_HOSTIP   = ${CEPH_LOCAL_HOSTIP}"
 
 Test_CheckPathName
 echo ""
