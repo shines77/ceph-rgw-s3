@@ -20,7 +20,40 @@ A shell script is used to install or configure Ceph RGW, and configuration for u
 
 然后可以看到 access_key 和 secret_key.
 
-RadosGW的vivetweb端口是8080.
+	{
+		"user_id": "mona",
+		"display_name": "Monika Singh",
+		"email": "mona@example.com",
+		"suspended": 0,
+		"max_buckets": 1000,
+		"auid": 0,
+		"subusers": [],
+		"keys": [
+			{
+				"user": "mona",
+				"access_key": "TS1IUAJU5W3ZM2QVF8XB",
+				"secret_key": "5N0CiXZmr0cyxzt3wKfmpv0G6XzwEeoZLJFBOOUV"
+			}
+		],
+		"swift_keys": [],
+		"caps": [],
+		"op_mask": "read, write, delete",
+		"default_placement": "",
+		"placement_tags": [],
+		"bucket_quota": {
+			"enabled": false,
+			"max_size_kb": -1,
+			"max_objects": -1
+		},
+		"user_quota": {
+			"enabled": false,
+			"max_size_kb": -1,
+			"max_objects": -1
+		},
+		"temp_url_keys": []
+	}
+
+RadosGW 的 civetweb 端口默认是8080.
 
 相关的配置查看 ./config.sh 里的定义:
 
