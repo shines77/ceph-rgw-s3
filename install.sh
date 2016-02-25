@@ -208,7 +208,7 @@ function Config_Ceph_RGW_for_S3()
     keyring = ${MY_CLUSTER_DIR}/dev/rgw/keyring
     rgw_socket_path = /tmp/radosgw.sock
     log_file = /var/log/radosgw/radosgw.log
-    rgw_frontends = "civetweb port=8080"
+    rgw_frontends = "civetweb port=${CIVETWEB_PORT}"
 EOF
 
     ############################################################
