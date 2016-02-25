@@ -12,7 +12,7 @@ A shell script is used to install or configure Ceph RGW, and configuration for u
 
 	./install.sh
 
-即可.
+即可 ceph 和 radosgw 的配置.
 
 要创建用户的话, 可执行:
 
