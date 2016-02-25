@@ -12,6 +12,15 @@ Check_Is_Root_Account
 
 cur_dir=$(pwd)
 
+# Process $MY_CLUSTER_DIR
+if [[ -z "${MY_CLUSTER_DIR}" || "${MY_CLUSTER_DIR}" = "../" ]]; then
+    MY_CLUSTER_DIR="${cur_dir}/../"
+else
+    if [ "${MY_CLUSTER_DIR}" = "./" ]; then
+        MY_CLUSTER_DIR="${cur_dir}/"
+    fi
+fi
+
 . version.sh
 . config.sh
 
@@ -50,4 +59,6 @@ Display_Welcome
 
 # Echo_Color_Test
 # Echo_Color_Ex_Test
+
+echo "MY_CLUSTER_DIR = ${MY_CLUSTER_DIR}"
 
