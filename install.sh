@@ -7,11 +7,15 @@ export PATH
 . include/echo_color.sh
 . include/common.sh
 . include/network.sh
+. include/path.sh
 
 # Check whether the logon user is a root account?
 Check_Is_Root_Account
 
 cur_dir=$(pwd)
+
+. version.sh
+. config.sh
 
 # Process $MY_CLUSTER_DIR
 if [[ -z "${MY_CLUSTER_DIR}" || "${MY_CLUSTER_DIR}" = "../" ]]; then
@@ -33,9 +37,6 @@ if [ -z "${CEPH_LOCAL_HOSTIP}" ]; then
     CEPH_LOCAL_HOSTIP=$(Get_Local_HostIP)
 fi
 
-. version.sh
-. config.sh
-
 . include/linux_version.sh
 
 Get_Linux_Dist_Name
@@ -45,7 +46,6 @@ if [ "${DISTRO}" = "unknow" ]; then
     exit 1
 fi
 
-. include/path.sh
 . include/random.sh
 
 function Display_Welcome()
