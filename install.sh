@@ -103,5 +103,8 @@ echo ""
 Test_Local_HostInfo
 echo ""
 
+Test_CheckPathName
+echo ""
+
 Config_Ceph_RGW_for_S3
 echo ""
