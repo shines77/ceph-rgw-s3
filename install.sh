@@ -37,6 +37,11 @@ if [ -z "${CEPH_LOCAL_HOSTIP}" ]; then
     CEPH_LOCAL_HOSTIP=$(Get_Local_HostIP)
 fi
 
+# Process CEPH_RADOSGW_HOST
+if [ -z "${CEPH_RADOSGW_HOST}" ]; then
+    CEPH_RADOSGW_HOST=$(Get_Local_HostName)
+fi
+
 # Process CIVETWEB_PORT
 if [ -z "${CIVETWEB_PORT}" ]; then
     CIVETWEB_PORT="8000"
@@ -123,31 +128,31 @@ function Config_Ceph_RGW_for_S3()
 
 [client]
     keyring = ${MY_CLUSTER_DIR}/keyring
-    log_file = ${MY_CLUSTER_DIR}/out/$name.$pid.log
-    admin_socket = ${MY_CLUSTER_DIR}/out/$name.$pid.asok
+    log_file = ${MY_CLUSTER_DIR}/out/\$name.\$pid.log
+    admin_socket = ${MY_CLUSTER_DIR}/out/\$name.\$pid.asok
 
 [mds]
-    log_file = ${MY_CLUSTER_DIR}/out/$name.log
-    admin_socket = ${MY_CLUSTER_DIR}/out/$name.asok
+    log_file = ${MY_CLUSTER_DIR}/out/\$name.log
+    admin_socket = ${MY_CLUSTER_DIR}/out/\$name.asok
     chdir_= ""
-    pid_file = ${MY_CLUSTER_DIR}/out/$name.pid
-    heartbeat_file = ${MY_CLUSTER_DIR}/out/$name.heartbeat
+    pid_file = ${MY_CLUSTER_DIR}/out/\$name.pid
+    heartbeat_file = ${MY_CLUSTER_DIR}/out/\$name.heartbeat
 
     debug_ms = 1
     mds_debug_frag = true
     mds_debug_auth_pins = true
     mds_debug_subtrees = true
-    mds_data = ${MY_CLUSTER_DIR}/dev/mds.$id
+    mds_data = ${MY_CLUSTER_DIR}/dev/mds.\$id
 
 [osd]
-    log_file = ${MY_CLUSTER_DIR}/out/$name.log
-    admin_socket = ${MY_CLUSTER_DIR}/out/$name.asok
+    log_file = ${MY_CLUSTER_DIR}/out/\$name.log
+    admin_socket = ${MY_CLUSTER_DIR}/out/\$name.asok
     chdir = ""
-    pid_file = ${MY_CLUSTER_DIR}/out/$name.pid
-    heartbeat_file = ${MY_CLUSTER_DIR}/out/$name.heartbeat
+    pid_file = ${MY_CLUSTER_DIR}/out/\$name.pid
+    heartbeat_file = ${MY_CLUSTER_DIR}/out/\$name.heartbeat
 
-    osd_data = ${MY_CLUSTER_DIR}/dev/osd$id
-    osd_journal = ${MY_CLUSTER_DIR}/dev/osd$id.journal
+    osd_data = ${MY_CLUSTER_DIR}/dev/osd\$id
+    osd_journal = ${MY_CLUSTER_DIR}/dev/osd\$id.journal
     osd_journal_size = 1000
     osd_scrub_load_threshold = 5.0
     osd_debug_op_order = true
@@ -167,16 +172,16 @@ function Config_Ceph_RGW_for_S3()
     mon_osd_prime_pg_temp = true
     crushtool = crushtool
 
-    log_file = ${MY_CLUSTER_DIR}/out/$name.log
-    admin_socket = ${MY_CLUSTER_DIR}/out/$name.asok
+    log_file = ${MY_CLUSTER_DIR}/out/\$name.log
+    admin_socket = ${MY_CLUSTER_DIR}/out/\$name.asok
     chdir = ""
-    pid_file = ${MY_CLUSTER_DIR}/out/$name.pid
-    heartbeat_file = ${MY_CLUSTER_DIR}/out/$name.heartbeat
+    pid_file = ${MY_CLUSTER_DIR}/out/\$name.pid
+    heartbeat_file = ${MY_CLUSTER_DIR}/out/\$name.heartbeat
 
     debug_mon = 10
     debug_ms = 1
 
-    mon_cluster_log_file = ${MY_CLUSTER_DIR}/out/cluster.mon.$id.log
+    mon_cluster_log_file = ${MY_CLUSTER_DIR}/out/cluster.mon.\$id.log
 
 [global]
 
@@ -193,7 +198,7 @@ function Config_Ceph_RGW_for_S3()
     host = ${CEPH_LOCAL_HOSTNAME}
 
 [client.radosgw.gateway]
-    host = ${CEPH_LOCAL_HOSTNAME}
+    host = ${CEPH_RADOSGW_HOST}
     keyring = ${MY_CLUSTER_DIR}/dev/rgw/keyring
     rgw_socket_path = /tmp/radosgw.sock
     log_file = /var/log/radosgw/radosgw.log
