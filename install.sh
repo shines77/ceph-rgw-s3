@@ -107,7 +107,7 @@ function Config_Ceph_RGW_for_S3()
     echo ""
 
     # Generate ceph.conf configuration file.
-    cat >>${MY_CLUSTER_DIR}/ceph.conf<<EOF
+    cat > ${MY_CLUSTER_DIR}/ceph.conf<<EOF
 [global]
     fsid = ${fsid}
     osd_pg_bits = 6
