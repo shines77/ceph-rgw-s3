@@ -85,8 +85,8 @@ Display_Welcome
 # Echo_Color_Test
 # Echo_Color_Ex_Test
 
-echo "MY_CLUSTER_DIR = ${MY_CLUSTER_DIR}"
-echo ""
+# echo "MY_CLUSTER_DIR = ${MY_CLUSTER_DIR}"
+# echo ""
 
 function Show_Ceph_HostInfo()
 {
@@ -266,7 +266,7 @@ EOF
     radosgw --id=radosgw.gateway
     radosgw -c ${MY_CLUSTER_DIR}/ceph.conf --keyring=${MY_CLUSTER_DIR}/dev/rgw/keyring --id=radosgw.gateway -d
 
-    radosgw-admin user create --uid=s3_test --display-name="S3 test user" --email=admin@123456.com
+    ## radosgw-admin user create --uid=s3_test --display-name="S3 test user" --email=admin@example.com
 
     echo ""
     Press_Start
@@ -288,14 +288,14 @@ EOF
 ## Test_Random
 ## echo ""
 
-Test_Local_HostInfo
-echo ""
+# Test_Local_HostInfo
+# echo ""
 
-Show_Ceph_HostInfo
-echo ""
+# Show_Ceph_HostInfo
+# echo ""
 
-Test_CheckPathName
-echo ""
+# Test_CheckPathName
+# echo ""
 
 Config_Ceph_RGW_for_S3
 echo ""
