@@ -1,5 +1,8 @@
 #!/bin/bash
 
+##
+## See: http://www.jb51.net/article/56585.htm
+##
 function Get_Local_HostName()
 {
     local local_hostname="`hostname --fqdn`"
@@ -7,6 +10,12 @@ function Get_Local_HostName()
 }
 
 function Get_Local_HostIP()
+{
+    local local_hostip="`/sbin/ifconfig -a | grep inet | grep -v 127.0.0.1 | grep -v inet6 | awk '{print $2}' | tr -d "addr:"`"
+    echo "${local_hostip}"
+}
+
+function Get_Local_HostIP2()
 {
     local local_hostip="`/sbin/ifconfig -a | grep inet | grep -v 127.0.0.1 | grep -v inet6 | awk '{print $2}' | tr -d "addr:"`"
     echo "${local_hostip}"

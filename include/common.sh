@@ -9,3 +9,9 @@ function Check_Is_Root_Account()
         exit 1
     fi
 }
+
+# Return a uuid string
+function Get_UUID()
+{
+    echo "`uuidgen`"
+}

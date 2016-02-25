@@ -6,6 +6,7 @@ export PATH
 # For Check_Is_Root_Account(), Echo_Color()
 . include/echo_color.sh
 . include/common.sh
+. include/network.sh
 
 # Check whether the logon user is a root account?
 Check_Is_Root_Account
@@ -17,8 +18,19 @@ if [[ -z "${MY_CLUSTER_DIR}" || "${MY_CLUSTER_DIR}" = "../" ]]; then
     MY_CLUSTER_DIR="${cur_dir}/../"
 else
     if [ "${MY_CLUSTER_DIR}" = "./" ]; then
-        MY_CLUSTER_DIR="${cur_dir}/"
+        MY_CLUSTER_DIR="${cur_dir}"
     fi
+fi
+MY_CLUSTER_DIR=$(Check_PathName ${MY_CLUSTER_DIR})
+
+# Process $CEPH_LOCAL_HOSTNAME
+if [ -z "${CEPH_LOCAL_HOSTNAME}" ]; then
+    CEPH_LOCAL_HOSTNAME=$(Get_Local_HostName)
+fi
+
+# Process $CEPH_LOCAL_HOSTIP
+if [ -z "${CEPH_LOCAL_HOSTIP}" ]; then
+    CEPH_LOCAL_HOSTIP=$(Get_Local_HostIP)
 fi
 
 . version.sh
@@ -33,8 +45,8 @@ if [ "${DISTRO}" = "unknow" ]; then
     exit 1
 fi
 
+. include/path.sh
 . include/random.sh
-. include/network.sh
 
 function Display_Welcome()
 {
@@ -66,8 +78,30 @@ Display_Welcome
 echo "MY_CLUSTER_DIR = ${MY_CLUSTER_DIR}"
 echo ""
 
+function Config_Ceph_RGW_for_S3()
+{
+    mkdir -p ${MY_CLUSTER_DIR}
+    cd ${MY_CLUSTER_DIR}
+    ceph-authtool --create-keyring ${MY_CLUSTER_DIR}/keyring --gen-key -n mon. --cap mon 'allow *'
+    ceph-authtool --gen-key --name=client.admin --set-uid=0 --cap mon 'allow *' --cap osd 'allow *' --cap mds 'allow *' $MY_CLUSTER/keyring
+    monmaptool --create --clobber --add a ${CEPH_LOCAL_HOSTIP}:6789 --print ${MY_CLUSTER_DIR}/ceph_monmap.17607
+
+    mkdir -p ${MY_CLUSTER_DIR}/dev
+    rm -rf ${MY_CLUSTER_DIR}/dev/mon.a
+    mkdir -p ${MY_CLUSTER_DIR}/dev/mon.a
+
+    # generate the "fsid" use in ceph.conf
+    local fsid=$(Get_UUID)
+
+    echo "fsid = ${fsid}"
+    echo ""
+}
+
 Test_Random
 echo ""
 
 Test_Local_HostInfo
+echo ""
+
+Config_Ceph_RGW_for_S3
 echo ""
