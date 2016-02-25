@@ -30,7 +30,7 @@ Display_Welcome()
     echo ""
     echo "+------------------------------------------------------------------------+"
     echo "|                                                                        |"
-    Echo_Cyan_Ex "|" "               Ceph RGW S3 Shell Script for Linux Server               " "|"
+    Echo_Cyan_Ex "|" "               Ceph RGW S3 Shell Script for Linux Server                " "|"
     echo "|                                                                        |"
     echo "|                           Version: ${CEPH_RGW_S3_Version}                               |"
     echo "|                           Host OS: ${DISTRO}                            "
