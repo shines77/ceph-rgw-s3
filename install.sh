@@ -48,5 +48,6 @@ Display_Welcome()
 
 Display_Welcome
 
-Echo_Color_Test
-Echo_Color_Ex_Test
+# Echo_Color_Test
+# Echo_Color_Ex_Test
+
