@@ -17,7 +17,7 @@ cur_dir=$(pwd)
 . version.sh
 . config.sh
 
-# Process $MY_CLUSTER_DIR
+# Process ${MY_CLUSTER_DIR}_DIR
 if [[ -z "${MY_CLUSTER_DIR}" || "${MY_CLUSTER_DIR}" = "../" ]]; then
     MY_CLUSTER_DIR="${cur_dir}/../"
 else
@@ -87,6 +87,12 @@ Display_Welcome
 
 echo "MY_CLUSTER_DIR = ${MY_CLUSTER_DIR}"
 echo ""
+
+function Show_Ceph_HostInfo()
+{
+    echo "CEPH_LOCAL_HOSTNAME = ${CEPH_LOCAL_HOSTNAME}"
+    echo "CEPH_LOCAL_HOSTIP   = ${CEPH_LOCAL_HOSTIP}"    
+}
 
 function Config_Ceph_RGW_for_S3()
 {
@@ -204,6 +210,68 @@ function Config_Ceph_RGW_for_S3()
     log_file = /var/log/radosgw/radosgw.log
     rgw_frontends = "civetweb port=80"
 EOF
+
+    ceph-mon --mkfs -c ${MY_CLUSTER_DIR}/ceph.conf -i a --monmap=${MY_CLUSTER_DIR}/ceph_monmap.17607 --keyring=${MY_CLUSTER_DIR}/keyring
+    ceph-mon -i a -c ${MY_CLUSTER_DIR}/ceph.conf
+
+    ## For osd 0
+    rm -rf ${MY_CLUSTER_DIR}/dev/osd0
+    mkdir -p ${MY_CLUSTER_DIR}/dev/osd0
+
+    ## Generate uuid for osd 0
+    local osd_uuid=$(Get_UUID)
+    ceph -c ${MY_CLUSTER_DIR}/ceph.conf -k ${MY_CLUSTER_DIR}/keyring osd create ${osd_uuid}
+    ceph -c ${MY_CLUSTER_DIR}/ceph.conf -k ${MY_CLUSTER_DIR}/keyring osd crush add osd.0 1.0 host=${CEPH_LOCAL_HOSTNAME} root=default
+    ceph-osd -i 0 -c ${MY_CLUSTER_DIR}/ceph.conf --mkfs --mkkey --osd-uuid ${osd_uuid}
+    ceph -c ${MY_CLUSTER_DIR}/ceph.conf -k ${MY_CLUSTER_DIR}/keyring -i ${MY_CLUSTER_DIR}/dev/osd0/keyring auth add osd.0 osd 'allow *' mon 'allow profile osd'
+    ceph-osd -i 0 -c ${MY_CLUSTER_DIR}/ceph.conf
+
+    ## For osd 1
+    rm -rf ${MY_CLUSTER_DIR}/dev/osd1
+    mkdir -p ${MY_CLUSTER_DIR}/dev/osd1
+
+    ## Generate uuid for osd 1
+    osd_uuid=$(Get_UUID)
+    ceph -c ${MY_CLUSTER_DIR}/ceph.conf -k ${MY_CLUSTER_DIR}/keyring osd create ${osd_uuid}
+    ceph -c ${MY_CLUSTER_DIR}/ceph.conf -k ${MY_CLUSTER_DIR}/keyring osd crush add osd.1 1.0 host=${CEPH_LOCAL_HOSTNAME} root=default
+    ceph-osd -i 1 -c ${MY_CLUSTER_DIR}/ceph.conf --mkfs --mkkey --osd-uuid ${osd_uuid}
+    ceph -c ${MY_CLUSTER_DIR}/ceph.conf -k ${MY_CLUSTER_DIR}/keyring -i ${MY_CLUSTER_DIR}/dev/osd1/keyring auth add osd.1 osd 'allow *' mon 'allow profile osd'
+    ceph-osd -i 1 -c ${MY_CLUSTER_DIR}/ceph.conf
+
+    ## For osd 2
+    rm -rf ${MY_CLUSTER_DIR}/dev/osd2
+    mkdir -p ${MY_CLUSTER_DIR}/dev/osd2
+
+    ## Generate uuid for osd 2
+    osd_uuid=$(Get_UUID)
+    ceph -c ${MY_CLUSTER_DIR}/ceph.conf -k ${MY_CLUSTER_DIR}/keyring osd create ${osd_uuid}
+    ceph -c ${MY_CLUSTER_DIR}/ceph.conf -k ${MY_CLUSTER_DIR}/keyring osd crush add osd.2 1.0 host=${CEPH_LOCAL_HOSTNAME} root=default
+    ceph-osd -i 2 -c ${MY_CLUSTER_DIR}/ceph.conf --mkfs --mkkey --osd-uuid ${osd_uuid}
+    ceph -c ${MY_CLUSTER_DIR}/ceph.conf -k ${MY_CLUSTER_DIR}/keyring -i ${MY_CLUSTER_DIR}/dev/osd2/keyring auth add osd.2 osd 'allow *' mon 'allow profile osd'
+    ceph-osd -i 2 -c ${MY_CLUSTER_DIR}/ceph.conf
+
+
+    ## For RadosGW
+    mkdir -p ${MY_CLUSTER_DIR}/dev/rgw/
+    ceph-authtool --create-keyring ${MY_CLUSTER_DIR}/dev/rgw/keyring
+    ceph-authtool ${MY_CLUSTER_DIR}/dev/rgw/keyring -n client.radosgw.gateway --gen-key
+    ceph-authtool -n client.radosgw.gateway --cap osd 'allow rwx' --cap mon 'allow rw' ${MY_CLUSTER_DIR}/dev/rgw/keyring
+    ceph -k ${MY_CLUSTER_DIR}/keyring auth add client.radosgw.gateway -i ${MY_CLUSTER_DIR}/dev/rgw/keyring
+
+    radosgw --id=radosgw.gateway
+    radosgw -c ${MY_CLUSTER_DIR}/ceph.conf --keyring=${MY_CLUSTER_DIR}/dev/rgw/keyring --id=radosgw.gateway -d
+
+    radosgw-admin user create --uid=s3_test --display-name="S3 test user" --email=admin@123456.com
+
+    ## stop.sh
+    killall ceph-osd
+    killall ceph-mon
+
+    ## start.sh
+    ceph-mon -i a -c ${MY_CLUSTER_DIR}/ceph.conf
+    ceph-osd -i 0 -c ${MY_CLUSTER_DIR}/ceph.conf
+    ceph-osd -i 1 -c ${MY_CLUSTER_DIR}/ceph.conf
+    ceph-osd -i 2 -c ${MY_CLUSTER_DIR}/ceph.conf
 }
 
 ## Test_Random
@@ -212,11 +280,14 @@ EOF
 Test_Local_HostInfo
 echo ""
 
-echo "CEPH_LOCAL_HOSTNAME = ${CEPH_LOCAL_HOSTNAME}"
-echo "CEPH_LOCAL_HOSTIP   = ${CEPH_LOCAL_HOSTIP}"
+Show_Ceph_HostInfo
+echo ""
 
 Test_CheckPathName
 echo ""
 
 Config_Ceph_RGW_for_S3
+echo ""
+
+echo "Config Ceph RadosGW for S3 have done!"
 echo ""

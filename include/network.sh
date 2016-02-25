@@ -17,7 +17,7 @@ function Get_Local_HostIP()
 
 function Get_Local_HostIP2()
 {
-    local local_hostip="`/sbin/ifconfig -a | grep inet | grep -v 127.0.0.1 | grep -v inet6 | awk '{print $2}' | tr -d "addr:"`"
+    local local_hostip="`/sbin/ifconfig | grep -v 127.0.0.1 | sed -n '/inet addr/s/^[^:]*:\([0-9.]\{7,15\}\) .*/\1/p'`"
     echo "${local_hostip}"
 }
 
