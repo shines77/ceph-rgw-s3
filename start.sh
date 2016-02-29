@@ -88,7 +88,7 @@ function Show_Ceph_HostInfo()
     echo "CEPH_LOCAL_HOSTIP   = ${CEPH_LOCAL_HOSTIP}"    
 }
 
-function Run_Ceph_RGW_for_S3()
+function Start_Ceph_RGW_for_S3()
 {
     ## stop.sh
 	killall radosgw
@@ -133,7 +133,7 @@ function Run_Ceph_RGW_for_S3()
     radosgw -c ${MY_CLUSTER_DIR}/ceph.conf --keyring=${MY_CLUSTER_DIR}/dev/rgw/keyring --id=radosgw.gateway -d
 }
 
-Run_Ceph_RGW_for_S3
+Start_Ceph_RGW_for_S3
 echo ""
 
 echo "Ceph RadosGW for S3 have running!"
