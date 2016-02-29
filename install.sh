@@ -96,8 +96,14 @@ function Show_Ceph_HostInfo()
 
 function Config_Ceph_RGW_for_S3()
 {
+    ## stop.sh
+	killall radosgw
+    killall ceph-osd
+    killall ceph-mon
+
     mkdir -p ${MY_CLUSTER_DIR}
     cd ${MY_CLUSTER_DIR}
+
     ceph-authtool --create-keyring ${MY_CLUSTER_DIR}/keyring --gen-key -n mon. --cap mon 'allow *'
     ceph-authtool --gen-key --name=client.admin --set-uid=0 --cap mon 'allow *' --cap osd 'allow *' --cap mds 'allow *' ${MY_CLUSTER_DIR}/keyring
     monmaptool --create --clobber --add a ${CEPH_LOCAL_HOSTIP}:6789 --print ${MY_CLUSTER_DIR}/ceph_monmap.17607
@@ -108,9 +114,6 @@ function Config_Ceph_RGW_for_S3()
 
     # Generate the "fsid" use in ceph.conf.
     local fsid=$(Get_UUID)
-
-    echo "fsid = ${fsid}"
-    echo ""
 
     # Generate ceph.conf configuration file.
     cat > ${MY_CLUSTER_DIR}/ceph.conf<<EOF
@@ -275,6 +278,7 @@ EOF
     ############################################################
 
     ## stop.sh
+	killall radosgw
     killall ceph-osd
     killall ceph-mon
 
