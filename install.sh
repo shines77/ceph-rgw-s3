@@ -103,6 +103,7 @@ function Config_Ceph_RGW_for_S3()
     ## stop.sh
 	killall radosgw
     killall ceph-osd
+	killall ceph-mds
     killall ceph-mon
 
     mkdir -p ${MY_CLUSTER_DIR}
