@@ -25,3 +25,6 @@
 *.tgz
 *.tar.z
 *.Z
+
+# Special for private config.sh settings everyone
+/config.sh
