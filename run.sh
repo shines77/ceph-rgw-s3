@@ -107,14 +107,17 @@ function Run_Ceph_RGW_for_S3()
     ceph-mon -i a -c ${MY_CLUSTER_DIR}/ceph.conf
 
 	mkdir -p ${MY_CLUSTER_DIR}/dev/osd0
+	ceph -c ${MY_CLUSTER_DIR}/ceph.conf -k ${MY_CLUSTER_DIR}/keyring osd crush add osd.0 1.0 host=${CEPH_LOCAL_HOSTNAME} root=default
 	ceph -c ${MY_CLUSTER_DIR}/ceph.conf -k ${MY_CLUSTER_DIR}/keyring -i ${MY_CLUSTER_DIR}/dev/osd0/keyring auth add osd.0 osd 'allow *' mon 'allow profile osd'
     ceph-osd -i 0 -c ${MY_CLUSTER_DIR}/ceph.conf
 
 	mkdir -p ${MY_CLUSTER_DIR}/dev/osd1
+	ceph -c ${MY_CLUSTER_DIR}/ceph.conf -k ${MY_CLUSTER_DIR}/keyring osd crush add osd.1 1.0 host=${CEPH_LOCAL_HOSTNAME} root=default
 	ceph -c ${MY_CLUSTER_DIR}/ceph.conf -k ${MY_CLUSTER_DIR}/keyring -i ${MY_CLUSTER_DIR}/dev/osd1/keyring auth add osd.1 osd 'allow *' mon 'allow profile osd'
     ceph-osd -i 1 -c ${MY_CLUSTER_DIR}/ceph.conf
 
 	mkdir -p ${MY_CLUSTER_DIR}/dev/osd2
+	ceph -c ${MY_CLUSTER_DIR}/ceph.conf -k ${MY_CLUSTER_DIR}/keyring osd crush add osd.2 1.0 host=${CEPH_LOCAL_HOSTNAME} root=default
 	ceph -c ${MY_CLUSTER_DIR}/ceph.conf -k ${MY_CLUSTER_DIR}/keyring -i ${MY_CLUSTER_DIR}/dev/osd2/keyring auth add osd.2 osd 'allow *' mon 'allow profile osd'
     ceph-osd -i 2 -c ${MY_CLUSTER_DIR}/ceph.conf
 
