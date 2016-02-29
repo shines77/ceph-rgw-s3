@@ -17,7 +17,7 @@ cur_dir=$(pwd)
 . version.sh
 . config.sh
 
-# Process ${MY_CLUSTER_DIR}_DIR
+# Process $MY_CLUSTER_DIR
 if [[ -z "${MY_CLUSTER_DIR}" || "${MY_CLUSTER_DIR}" = "../" ]]; then
     MY_CLUSTER_DIR="${cur_dir}/../"
 else
@@ -26,6 +26,18 @@ else
     fi
 fi
 MY_CLUSTER_DIR=$(Check_PathName ${MY_CLUSTER_DIR})
+
+# Process $CEPH_BIN_DIR
+if [ -z "${CEPH_BIN_DIR}" ]; then
+    CEPH_BIN_DIR=""
+else
+    if [ "${CEPH_BIN_DIR}" = "../" ]; then
+        CEPH_BIN_DIR="${cur_dir}/../"
+    else
+        CEPH_BIN_DIR=$(Check_PathName ${CEPH_BIN_DIR})
+        CEPH_BIN_DIR="${CEPH_BIN_DIR}/"
+    fi
+fi
 
 # Process $CEPH_LOCAL_HOSTNAME
 if [ -z "${CEPH_LOCAL_HOSTNAME}" ]; then
@@ -91,46 +103,46 @@ function Show_Ceph_HostInfo()
 function Start_Ceph_RGW_for_S3()
 {
     ## stop.sh
-	killall radosgw
+    killall radosgw
     killall ceph-osd
-	killall ceph-mds
+    killall ceph-mds
     killall ceph-mon
 
     mkdir -p ${MY_CLUSTER_DIR}
     cd ${MY_CLUSTER_DIR}
 
-    # ceph-authtool --create-keyring ${MY_CLUSTER_DIR}/keyring --gen-key -n mon. --cap mon 'allow *'
-    # ceph-authtool --gen-key --name=client.admin --set-uid=0 --cap mon 'allow *' --cap osd 'allow *' --cap mds 'allow *' ${MY_CLUSTER_DIR}/keyring
-    monmaptool --create --clobber --add a ${CEPH_LOCAL_HOSTIP}:6789 --print ${MY_CLUSTER_DIR}/ceph_monmap.17607
+    # ${CEPH_BIN_DIR}ceph-authtool --create-keyring ${MY_CLUSTER_DIR}/keyring --gen-key -n mon. --cap mon 'allow *'
+    # ${CEPH_BIN_DIR}ceph-authtool --gen-key --name=client.admin --set-uid=0 --cap mon 'allow *' --cap osd 'allow *' --cap mds 'allow *' ${MY_CLUSTER_DIR}/keyring
+    ${CEPH_BIN_DIR}monmaptool --create --clobber --add a ${CEPH_LOCAL_HOSTIP}:6789 --print ${MY_CLUSTER_DIR}/ceph_monmap.17607
 
     ## start.sh
-	ceph-mon --mkfs -c ${MY_CLUSTER_DIR}/ceph.conf -i a --monmap=${MY_CLUSTER_DIR}/ceph_monmap.17607 --keyring=${MY_CLUSTER_DIR}/keyring
-    ceph-mon -i a -c ${MY_CLUSTER_DIR}/ceph.conf
+    ${CEPH_BIN_DIR}ceph-mon --mkfs -c ${MY_CLUSTER_DIR}/ceph.conf -i a --monmap=${MY_CLUSTER_DIR}/ceph_monmap.17607 --keyring=${MY_CLUSTER_DIR}/keyring
+    ${CEPH_BIN_DIR}ceph-mon -i a -c ${MY_CLUSTER_DIR}/ceph.conf
 
-	mkdir -p ${MY_CLUSTER_DIR}/dev/osd0
-	ceph -c ${MY_CLUSTER_DIR}/ceph.conf -k ${MY_CLUSTER_DIR}/keyring osd crush add osd.0 1.0 host=${CEPH_LOCAL_HOSTNAME} root=default
-	ceph -c ${MY_CLUSTER_DIR}/ceph.conf -k ${MY_CLUSTER_DIR}/keyring -i ${MY_CLUSTER_DIR}/dev/osd0/keyring auth add osd.0 osd 'allow *' mon 'allow profile osd'
-    ceph-osd -i 0 -c ${MY_CLUSTER_DIR}/ceph.conf
+    mkdir -p ${MY_CLUSTER_DIR}/dev/osd0
+    ${CEPH_BIN_DIR}ceph -c ${MY_CLUSTER_DIR}/ceph.conf -k ${MY_CLUSTER_DIR}/keyring osd crush add osd.0 1.0 host=${CEPH_LOCAL_HOSTNAME} root=default
+    ${CEPH_BIN_DIR}ceph -c ${MY_CLUSTER_DIR}/ceph.conf -k ${MY_CLUSTER_DIR}/keyring -i ${MY_CLUSTER_DIR}/dev/osd0/keyring auth add osd.0 osd 'allow *' mon 'allow profile osd'
+    ${CEPH_BIN_DIR}ceph-osd -i 0 -c ${MY_CLUSTER_DIR}/ceph.conf
 
-	mkdir -p ${MY_CLUSTER_DIR}/dev/osd1
-	ceph -c ${MY_CLUSTER_DIR}/ceph.conf -k ${MY_CLUSTER_DIR}/keyring osd crush add osd.1 1.0 host=${CEPH_LOCAL_HOSTNAME} root=default
-	ceph -c ${MY_CLUSTER_DIR}/ceph.conf -k ${MY_CLUSTER_DIR}/keyring -i ${MY_CLUSTER_DIR}/dev/osd1/keyring auth add osd.1 osd 'allow *' mon 'allow profile osd'
-    ceph-osd -i 1 -c ${MY_CLUSTER_DIR}/ceph.conf
+    mkdir -p ${MY_CLUSTER_DIR}/dev/osd1
+    ${CEPH_BIN_DIR}ceph -c ${MY_CLUSTER_DIR}/ceph.conf -k ${MY_CLUSTER_DIR}/keyring osd crush add osd.1 1.0 host=${CEPH_LOCAL_HOSTNAME} root=default
+    ${CEPH_BIN_DIR}ceph -c ${MY_CLUSTER_DIR}/ceph.conf -k ${MY_CLUSTER_DIR}/keyring -i ${MY_CLUSTER_DIR}/dev/osd1/keyring auth add osd.1 osd 'allow *' mon 'allow profile osd'
+    ${CEPH_BIN_DIR}ceph-osd -i 1 -c ${MY_CLUSTER_DIR}/ceph.conf
 
-	mkdir -p ${MY_CLUSTER_DIR}/dev/osd2
-	ceph -c ${MY_CLUSTER_DIR}/ceph.conf -k ${MY_CLUSTER_DIR}/keyring osd crush add osd.2 1.0 host=${CEPH_LOCAL_HOSTNAME} root=default
-	ceph -c ${MY_CLUSTER_DIR}/ceph.conf -k ${MY_CLUSTER_DIR}/keyring -i ${MY_CLUSTER_DIR}/dev/osd2/keyring auth add osd.2 osd 'allow *' mon 'allow profile osd'
-    ceph-osd -i 2 -c ${MY_CLUSTER_DIR}/ceph.conf
+    mkdir -p ${MY_CLUSTER_DIR}/dev/osd2
+    ${CEPH_BIN_DIR}ceph -c ${MY_CLUSTER_DIR}/ceph.conf -k ${MY_CLUSTER_DIR}/keyring osd crush add osd.2 1.0 host=${CEPH_LOCAL_HOSTNAME} root=default
+    ${CEPH_BIN_DIR}ceph -c ${MY_CLUSTER_DIR}/ceph.conf -k ${MY_CLUSTER_DIR}/keyring -i ${MY_CLUSTER_DIR}/dev/osd2/keyring auth add osd.2 osd 'allow *' mon 'allow profile osd'
+    ${CEPH_BIN_DIR}ceph-osd -i 2 -c ${MY_CLUSTER_DIR}/ceph.conf
 
     ## radosgw startup
     mkdir -p ${MY_CLUSTER_DIR}/dev/rgw/
-    # ceph-authtool --create-keyring ${MY_CLUSTER_DIR}/dev/rgw/keyring
-    # ceph-authtool ${MY_CLUSTER_DIR}/dev/rgw/keyring -n client.radosgw.gateway --gen-key
-    # ceph-authtool -n client.radosgw.gateway --cap osd 'allow rwx' --cap mon 'allow rw' ${MY_CLUSTER_DIR}/dev/rgw/keyring
-	# ceph -k ${MY_CLUSTER_DIR}/keyring auth add client.radosgw.gateway -i ${MY_CLUSTER_DIR}/dev/rgw/keyring
+    # ${CEPH_BIN_DIR}ceph-authtool --create-keyring ${MY_CLUSTER_DIR}/dev/rgw/keyring
+    # ${CEPH_BIN_DIR}ceph-authtool ${MY_CLUSTER_DIR}/dev/rgw/keyring -n client.radosgw.gateway --gen-key
+    # ${CEPH_BIN_DIR}ceph-authtool -n client.radosgw.gateway --cap osd 'allow rwx' --cap mon 'allow rw' ${MY_CLUSTER_DIR}/dev/rgw/keyring
+    # ${CEPH_BIN_DIR}ceph -k ${MY_CLUSTER_DIR}/keyring auth add client.radosgw.gateway -i ${MY_CLUSTER_DIR}/dev/rgw/keyring
 
-    # radosgw --id=radosgw.gateway
-    radosgw -c ${MY_CLUSTER_DIR}/ceph.conf --keyring=${MY_CLUSTER_DIR}/dev/rgw/keyring --id=radosgw.gateway -d
+    # ${CEPH_BIN_DIR}radosgw --id=radosgw.gateway
+    ${CEPH_BIN_DIR}radosgw -c ${MY_CLUSTER_DIR}/ceph.conf --keyring=${MY_CLUSTER_DIR}/dev/rgw/keyring --id=radosgw.gateway -d
 }
 
 Start_Ceph_RGW_for_S3
