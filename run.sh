@@ -98,19 +98,28 @@ function Run_Ceph_RGW_for_S3()
     mkdir -p ${MY_CLUSTER_DIR}
     cd ${MY_CLUSTER_DIR}
 
-    ceph-authtool --create-keyring ${MY_CLUSTER_DIR}/keyring --gen-key -n mon. --cap mon 'allow *'
-    ceph-authtool --gen-key --name=client.admin --set-uid=0 --cap mon 'allow *' --cap osd 'allow *' --cap mds 'allow *' ${MY_CLUSTER_DIR}/keyring
-    monmaptool --create --clobber --add a ${CEPH_LOCAL_HOSTIP}:6789 --print ${MY_CLUSTER_DIR}/ceph_monmap.17607
+    # ceph-authtool --create-keyring ${MY_CLUSTER_DIR}/keyring --gen-key -n mon. --cap mon 'allow *'
+    # ceph-authtool --gen-key --name=client.admin --set-uid=0 --cap mon 'allow *' --cap osd 'allow *' --cap mds 'allow *' ${MY_CLUSTER_DIR}/keyring
+    # monmaptool --create --clobber --add a ${CEPH_LOCAL_HOSTIP}:6789 --print ${MY_CLUSTER_DIR}/ceph_monmap.17607
 
     ## start.sh
 	ceph-mon --mkfs -c ${MY_CLUSTER_DIR}/ceph.conf -i a --monmap=${MY_CLUSTER_DIR}/ceph_monmap.17607 --keyring=${MY_CLUSTER_DIR}/keyring
     ceph-mon -i a -c ${MY_CLUSTER_DIR}/ceph.conf
+
+	mkdir -p ${MY_CLUSTER_DIR}/dev/osd0
+	ceph -c ${MY_CLUSTER_DIR}/ceph.conf -k ${MY_CLUSTER_DIR}/keyring -i ${MY_CLUSTER_DIR}/dev/osd0/keyring auth add osd.0 osd 'allow *' mon 'allow profile osd'
     ceph-osd -i 0 -c ${MY_CLUSTER_DIR}/ceph.conf
+
+	mkdir -p ${MY_CLUSTER_DIR}/dev/osd1
+	ceph -c ${MY_CLUSTER_DIR}/ceph.conf -k ${MY_CLUSTER_DIR}/keyring -i ${MY_CLUSTER_DIR}/dev/osd1/keyring auth add osd.1 osd 'allow *' mon 'allow profile osd'
     ceph-osd -i 1 -c ${MY_CLUSTER_DIR}/ceph.conf
+
+	mkdir -p ${MY_CLUSTER_DIR}/dev/osd2
+	ceph -c ${MY_CLUSTER_DIR}/ceph.conf -k ${MY_CLUSTER_DIR}/keyring -i ${MY_CLUSTER_DIR}/dev/osd2/keyring auth add osd.2 osd 'allow *' mon 'allow profile osd'
     ceph-osd -i 2 -c ${MY_CLUSTER_DIR}/ceph.conf
 
     ## radosgw startup
-    # mkdir -p ${MY_CLUSTER_DIR}/dev/rgw/
+    mkdir -p ${MY_CLUSTER_DIR}/dev/rgw/
     # ceph-authtool --create-keyring ${MY_CLUSTER_DIR}/dev/rgw/keyring
     # ceph-authtool ${MY_CLUSTER_DIR}/dev/rgw/keyring -n client.radosgw.gateway --gen-key
     # ceph-authtool -n client.radosgw.gateway --cap osd 'allow rwx' --cap mon 'allow rw' ${MY_CLUSTER_DIR}/dev/rgw/keyring
