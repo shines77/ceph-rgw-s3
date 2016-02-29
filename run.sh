@@ -102,6 +102,10 @@ function Run_Ceph_RGW_for_S3()
     ceph-osd -i 0 -c ${MY_CLUSTER_DIR}/ceph.conf
     ceph-osd -i 1 -c ${MY_CLUSTER_DIR}/ceph.conf
     ceph-osd -i 2 -c ${MY_CLUSTER_DIR}/ceph.conf
+
+    ## radosgw startup
+    radosgw --id=radosgw.gateway
+    radosgw -c ${MY_CLUSTER_DIR}/ceph.conf --keyring=${MY_CLUSTER_DIR}/dev/rgw/keyring --id=radosgw.gateway -d
 }
 
 Run_Ceph_RGW_for_S3
