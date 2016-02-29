@@ -96,6 +96,10 @@ function Show_Ceph_HostInfo()
 
 function Config_Ceph_RGW_for_S3()
 {
+    echo ""
+    Press_Start
+    echo ""
+
     ## stop.sh
 	killall radosgw
     killall ceph-osd
@@ -270,10 +274,6 @@ EOF
     radosgw -c ${MY_CLUSTER_DIR}/ceph.conf --keyring=${MY_CLUSTER_DIR}/dev/rgw/keyring --id=radosgw.gateway -d
 
     ## radosgw-admin user create --uid=s3_test --display-name="S3 test user" --email=admin@example.com
-
-    echo ""
-    Press_Start
-    echo ""
 
     ############################################################
 
