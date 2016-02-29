@@ -94,6 +94,7 @@ function Run_Ceph_RGW_for_S3()
     cd ${MY_CLUSTER_DIR}
 
     ## stop.sh
+	killall radosgw
     killall ceph-osd
     killall ceph-mon
 
