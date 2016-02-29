@@ -27,5 +27,5 @@
 *.Z
 
 # Special for private config.sh settings everyone
-/config.sh
-config.sh
+# /config.sh
+# config.sh
