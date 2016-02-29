@@ -110,10 +110,10 @@ function Run_Ceph_RGW_for_S3()
     ceph-osd -i 2 -c ${MY_CLUSTER_DIR}/ceph.conf
 
     ## radosgw startup
-    mkdir -p ${MY_CLUSTER_DIR}/dev/rgw/
-    ceph-authtool --create-keyring ${MY_CLUSTER_DIR}/dev/rgw/keyring
-    ceph-authtool ${MY_CLUSTER_DIR}/dev/rgw/keyring -n client.radosgw.gateway --gen-key
-    ceph-authtool -n client.radosgw.gateway --cap osd 'allow rwx' --cap mon 'allow rw' ${MY_CLUSTER_DIR}/dev/rgw/keyring
+    # mkdir -p ${MY_CLUSTER_DIR}/dev/rgw/
+    # ceph-authtool --create-keyring ${MY_CLUSTER_DIR}/dev/rgw/keyring
+    # ceph-authtool ${MY_CLUSTER_DIR}/dev/rgw/keyring -n client.radosgw.gateway --gen-key
+    # ceph-authtool -n client.radosgw.gateway --cap osd 'allow rwx' --cap mon 'allow rw' ${MY_CLUSTER_DIR}/dev/rgw/keyring
 	ceph -k ${MY_CLUSTER_DIR}/keyring auth add client.radosgw.gateway -i ${MY_CLUSTER_DIR}/dev/rgw/keyring
 
     radosgw --id=radosgw.gateway
