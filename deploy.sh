@@ -293,11 +293,11 @@ function Menu_Selection()
 {
     MenuSelect="2"
     echo ""
-    Echo_Yellow "You have 3 options for your Memory Allocator install:"
+    Echo_Yellow "You have 3 options for ceph and rados-gw:"
     echo ""
-    echo "1) Deploy ceph and rados-rgw"
-    echo "2) Start ceph and rados-rgw (Default)"
-    echo "3) Stop ceph and rados-rgw"
+    echo "1) Deploy ceph and rados-gw"
+    echo "2) Start ceph and rados-gw (Default)"
+    echo "3) Stop ceph and rados-gw"
     echo "4) Exit"
     echo ""
     read -p "Enter your choice (1, 2, 3 or 4): " MenuSelect
@@ -305,13 +305,13 @@ function Menu_Selection()
     echo ""
     case "${MenuSelect}" in
         1)
-            Echo_Cyan "It will deploy ceph and rados-rgw."
+            Echo_Cyan "It will deploy ceph and rados-gw."
             ;;
         2)
-            Echo_Cyan "It will startup ceph and rados-rgw. (Default)"
+            Echo_Cyan "It will startup ceph and rados-gw. (Default)"
             ;;
         3)
-            Echo_Cyan "It will stop ceph and rados-rgw."
+            Echo_Cyan "It will stop ceph and rados-gw."
             ;;            
         4)
             Echo_Cyan "It will exit and do nothing."
