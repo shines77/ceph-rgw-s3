@@ -1,20 +1,28 @@
 # ceph-rgw-s3
 
-A shell script is used to install or configure Ceph RGW, and configuration for used to support S3 API environment.
+A shell script that is used to deploy Ceph, and configure for rados-rgw used to support S3 API environment.
 
 # 说明
 
-这是一个配置ceph和radosgw的shell脚本, 可以在自己的虚拟机里配置成调用S3服务.
+这是一个部署ceph和rados-gw的shell脚本, 可以在自己的虚拟机里配置成调用S3服务.
 
 # 使用方法
 
 直接执行
 
-	./install.sh
+	./deploy.sh
 
-即可 ceph 和 radosgw 的配置.
+即可部署和配置 ceph 和 rados-gw.
 
-要创建用户的话, 可执行:
+如果要启动 ceph 和 rados-gw, 可使用:
+
+	./start.sh
+
+类似的, 要停止 ceph 和 rados-gw, 可使用:
+
+	./stop.sh
+
+要创建用户的话, 可使用:
 
 	./create_user.sh
 
