@@ -331,6 +331,7 @@ function Menu_Selection()
         Stop_Ceph_RGW        
     elif [ "${MenuSelect}" = "4" ]; then
         # exit, do nothing!
+        echo ""
     else
         # Unknown input, retry again.
         echo ""
