@@ -300,7 +300,7 @@ function Menu_Selection()
     echo "3) Stop ceph and rados-gw"
     echo "4) Exit"
     echo ""
-    read -p "Enter your choice (1, 2, 3 or 4): " MenuSelect
+    read -p "Enter your choice (1, 2, 3 or 4)[${MenuSelect}]: " MenuSelect
 
     echo ""
     case "${MenuSelect}" in
@@ -331,7 +331,7 @@ function Menu_Selection()
         Stop_Ceph_RGW        
     elif [ "${MenuSelect}" = "4" ]; then
         # exit, do nothing!
-        echo ""
+        exit
     else
         # Unknown input, retry again.
         echo ""
