@@ -9,5 +9,6 @@ killall ceph-osd
 killall ceph-mds
 killall ceph-mon
 
+echo ""
 echo "All of ceph processes have been killed!"
 echo ""

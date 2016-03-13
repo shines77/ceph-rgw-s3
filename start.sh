@@ -92,15 +92,13 @@ function Display_Welcome()
     echo ""
 }
 
-Display_Welcome
-
 function Show_Ceph_HostInfo()
 {
     echo "CEPH_LOCAL_HOSTNAME = ${CEPH_LOCAL_HOSTNAME}"
     echo "CEPH_LOCAL_HOSTIP   = ${CEPH_LOCAL_HOSTIP}"    
 }
 
-function Start_Ceph_RGW_for_S3()
+function Start_Ceph_RGW()
 {
     ## stop.sh
     killall radosgw
@@ -145,8 +143,10 @@ function Start_Ceph_RGW_for_S3()
     ${CEPH_BIN_DIR}radosgw -c ${MY_CLUSTER_DIR}/ceph.conf --keyring=${MY_CLUSTER_DIR}/dev/rgw/keyring --id=radosgw.gateway -d
 }
 
-Start_Ceph_RGW_for_S3
-echo ""
+Display_Welcome
 
+Start_Ceph_RGW
+
+echo ""
 echo "Ceph and RadosGW have exited!"
 echo ""
