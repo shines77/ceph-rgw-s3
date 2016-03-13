@@ -300,7 +300,7 @@ function Menu_Selection()
     echo "3) Stop ceph and rados-gw"
     echo "4) Exit"
     echo ""
-    read -p "Enter your choice (1, 2, 3 or 4)[${MenuSelect}]: " MenuSelect
+    read -p "Enter your choice (1, 2, 3 or 4): [${MenuSelect}] ?" MenuSelect
 
     echo ""
     case "${MenuSelect}" in
