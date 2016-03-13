@@ -148,5 +148,5 @@ function Start_Ceph_RGW_for_S3()
 Start_Ceph_RGW_for_S3
 echo ""
 
-echo "Ceph RadosGW for S3 have running!"
+echo "Ceph and RadosGW have exited!"
 echo ""

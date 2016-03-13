@@ -18,7 +18,7 @@ A shell script that is used to deploy Ceph, and configure for rados-rgw used to 
 
 	./start.sh
 
-类似的, 要停止 ceph 和 rados-gw, 可使用:
+类似的, 停止 ceph 和 rados-gw, 可使用:
 
 	./stop.sh
 

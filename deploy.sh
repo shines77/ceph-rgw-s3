@@ -92,8 +92,6 @@ function Display_Welcome()
     echo ""
 }
 
-Display_Welcome
-
 function Show_Ceph_HostInfo()
 {
     echo "CEPH_LOCAL_HOSTNAME = ${CEPH_LOCAL_HOSTNAME}"
@@ -281,9 +279,14 @@ EOF
     ############################################################
 }
 
-function Startup_Ceph_RGW()
+function Start_Ceph_RGW()
 {
     ./start.sh
+}
+
+function Stop_Ceph_RGW()
+{
+    ./stop.sh
 }
 
 function Menu_Selection()
@@ -294,9 +297,10 @@ function Menu_Selection()
     echo ""
     echo "1) Deploy ceph and rados-rgw"
     echo "2) Start ceph and rados-rgw (Default)"
-    echo "3) Exit"
+    echo "3) Stop ceph and rados-rgw"
+    echo "4) Exit"
     echo ""
-    read -p "Enter your choice (1, 2 or 3): " MenuSelect
+    read -p "Enter your choice (1, 2, 3 or 4): " MenuSelect
 
     echo ""
     case "${MenuSelect}" in
@@ -307,10 +311,13 @@ function Menu_Selection()
             Echo_Cyan "It will startup ceph and rados-rgw. (Default)"
             ;;
         3)
+            Echo_Cyan "It will stop ceph and rados-rgw."
+            ;;            
+        4)
             Echo_Cyan "It will exit and do nothing."
             ;;
         *)
-            Echo_Cyan "Unknown input, You must choose a option from 1, 2 or 3."
+            Echo_Cyan "Unknown input, You must choose a option from 1, 2, 3 or 4."
             MenuSelect="2"
             ;;
     esac
@@ -319,8 +326,10 @@ function Menu_Selection()
     if [ "${MenuSelect}" = "1" ]; then
         Deploy_Ceph_RGW
     elif [ "${MenuSelect}" = "2" ]; then
-        Startup_Ceph_RGW
+        Start_Ceph_RGW
     elif [ "${MenuSelect}" = "3" ]; then
+        Stop_Ceph_RGW        
+    elif [ "${MenuSelect}" = "4" ]; then
         # exit, do nothing!
     else
         # Unknown input, retry again.
@@ -329,8 +338,10 @@ function Menu_Selection()
     fi
 }
 
+Display_Welcome
+
 Menu_Selection
 echo ""
 
-echo "Deploy Ceph RadosGW for S3 have done!"
+echo "Ceph and RadosGW have exited!"
 echo ""
