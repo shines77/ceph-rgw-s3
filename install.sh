@@ -100,12 +100,8 @@ function Show_Ceph_HostInfo()
     echo "CEPH_LOCAL_HOSTIP   = ${CEPH_LOCAL_HOSTIP}"    
 }
 
-function Config_Ceph_RGW_for_S3()
+function Deploy_Ceph_RGW()
 {
-    echo ""
-    Press_Start
-    echo ""
-
     ## stop.sh
     killall radosgw
     killall ceph-osd
@@ -283,21 +279,58 @@ EOF
     ## ${CEPH_BIN_DIR}radosgw-admin user create --uid=s3_test --display-name="S3 test user" --email=admin@example.com
 
     ############################################################
-
-    ## stop.sh
-    killall radosgw
-    killall ceph-osd
-    killall ceph-mon
-
-    ## start.sh
-    ${CEPH_BIN_DIR}ceph-mon -i a -c ${MY_CLUSTER_DIR}/ceph.conf
-    ${CEPH_BIN_DIR}ceph-osd -i 0 -c ${MY_CLUSTER_DIR}/ceph.conf
-    ${CEPH_BIN_DIR}ceph-osd -i 1 -c ${MY_CLUSTER_DIR}/ceph.conf
-    ${CEPH_BIN_DIR}ceph-osd -i 2 -c ${MY_CLUSTER_DIR}/ceph.conf
 }
 
-Config_Ceph_RGW_for_S3
+function Startup_Ceph_RGW()
+{
+    ./start.sh
+}
+
+function Menu_Selection()
+{
+    MenuSelect="2"
+    echo ""
+    Echo_Yellow "You have 3 options for your Memory Allocator install:"
+    echo ""
+    echo "1) Deploy ceph and rados-rgw"
+    echo "2) Start ceph and rados-rgw (Default)"
+    echo "3) Exit"
+    echo ""
+    read -p "Enter your choice (1, 2 or 3): " MenuSelect
+
+    echo ""
+    case "${MenuSelect}" in
+        1)
+            Echo_Cyan "It will deploy ceph and rados-rgw."
+            ;;
+        2)
+            Echo_Cyan "It will startup ceph and rados-rgw. (Default)"
+            ;;
+        3)
+            Echo_Cyan "It will exit and do nothing."
+            ;;
+        *)
+            Echo_Cyan "Unknown input, You must choose a option from 1, 2 or 3."
+            MenuSelect="2"
+            ;;
+    esac
+    echo ""
+
+    if [ "${MenuSelect}" = "1" ]; then
+        Deploy_Ceph_RGW
+    elif [ "${MenuSelect}" = "2" ]; then
+        Startup_Ceph_RGW
+    elif [ "${MenuSelect}" = "3" ]; then
+        # exit, do nothing!
+    else
+        # Unknown input, retry again.
+        echo ""
+        Menu_Selection
+    fi
+}
+
+Menu_Selection
 echo ""
 
-echo "Config Ceph RadosGW for S3 have done!"
+echo "Deploy Ceph RadosGW for S3 have done!"
 echo ""
