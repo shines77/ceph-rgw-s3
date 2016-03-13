@@ -1,6 +1,6 @@
 # ceph-rgw-s3
 
-A shell script that is used to deploy Ceph, and configure for rados-rgw used to support S3 API environment.
+A shell script that is used to deploy Ceph, and configure for rados-gw used to support S3 API environment.
 
 # 说明
 
