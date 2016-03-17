@@ -105,7 +105,7 @@ function Menu_Selection()
     echo ""
 
     if [ "${MenuSelect}" = "1" ]; then
-        Deploy_Ceph_RGW
+        Deploy_Confirm
     elif [ "${MenuSelect}" = "2" ]; then
         Start_Ceph_RGW
     elif [ "${MenuSelect}" = "3" ]; then
