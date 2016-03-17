@@ -35,9 +35,9 @@ function Deploy_Confirm()
     Echo_Yellow "You have 2 options for ceph and rados-gw:"
     echo ""
     echo "Y) Deploy ceph and rados-gw now."
-    echo "N) Deploy later and exit. (default)"
+    Echo_Cyan "N) Deploy later and exit. (default)"
     echo ""
-    Echo_Red "(Becareful, deploy now will destroy your all osd data, users and keys !!)"
+    Echo_Cyan "(Becareful, deploy now will destroy your all osd data, users and keys !!)"
     echo ""
     read -p "Enter your choice: [y/N] ? " ConfirmSelect
 
@@ -73,7 +73,7 @@ function Menu_Selection()
     Echo_Yellow "You have 5 options for ceph and rados-gw:"
     echo ""
     echo "1) Deploy ceph and rados-gw."
-    echo "2) Start ceph and rados-gw. (Default)"
+    Echo_Cyan "2) Start ceph and rados-gw. (Default)"
     echo "3) Stop ceph and rados-gw."
     echo "4) Create ceph users and keys."
     echo "5) Exit."
