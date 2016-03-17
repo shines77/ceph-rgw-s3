@@ -27,6 +27,45 @@ if [ "${DISTRO}" = "unknow" ]; then
     exit 1
 fi
 
+function Deploy_Confirm()
+{
+    local deploy_now=0
+    ConfirmSelect="No"
+    echo ""
+    Echo_Yellow "You have 2 options for ceph and rados-gw:"
+    echo ""
+    echo "Y) Deploy ceph and rados-gw now."
+    echo "N) Deploy later and exit. (default)"
+    echo ""
+    Echo_Red "(Becareful, deploy now will destroy your all osd data, users and keys !!)"
+    echo ""
+    read -p "Enter your choice: [y/N] ? " ConfirmSelect
+
+    echo ""
+    case "${ConfirmSelect}" in
+        1|y|Y|Yes|yes)
+            Echo_Cyan "It will deploy ceph and rados-gw now."
+            deploy_now=1
+            ;;
+        2|n|N|No|no)
+            Echo_Cyan "Don't deploy ceph now, and exit. (Default)"
+            deploy_now=0
+            ;;
+        *)
+            Echo_Cyan "Unknown input, Don't deploy ceph now."
+            deploy_now=0
+            ;;
+    esac
+    echo ""
+
+    if [ "${deploy_now}" == "1" ]; then
+        Deploy_Ceph_RGW
+    else
+        # do nothing and exit.
+        exit
+    fi
+}
+
 function Menu_Selection()
 {
     MenuSelect="2"
