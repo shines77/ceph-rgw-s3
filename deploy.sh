@@ -52,7 +52,7 @@ function Deploy_Confirm()
             deploy_now=0
             ;;
         *)
-            Echo_Cyan "Unknown input, Don't deploy ceph now."
+            Echo_Cyan "Unknown input, Don't deploy ceph now and exit."
             deploy_now=0
             ;;
     esac

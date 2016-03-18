@@ -42,6 +42,11 @@ if [ -z "${CEPH_LOCAL_PORT}" ]; then
     CEPH_LOCAL_PORT="6789"
 fi
 
+# Set $CEPH_MON_PORT
+if [ -z "${CEPH_MON_PORT}" ]; then
+    CEPH_MON_PORT="6789"
+fi
+
 # Set CEPH_RADOSGW_HOST
 if [ -z "${CEPH_RADOSGW_HOST}" ]; then
     CEPH_RADOSGW_HOST=$(Get_Local_HostName)

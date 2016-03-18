@@ -18,8 +18,11 @@ CEPH_LOCAL_HOSTNAME=""
 # Ceph host ip, example: "192.168.1.1",
 # if the value is empty, it is indicated that use local host ip.
 CEPH_LOCAL_HOSTIP=""
-# Ceph port, default is: "6789",
+# Ceph port, default is: "",
 CEPH_LOCAL_PORT=""
+
+# Ceph monitor port, default is: "6789",
+CEPH_MON_PORT=""
 
 # Radosgw host, example: "localhost" or "192.168.1.1",
 # if the value is empty, it is indicated that use local host ip.

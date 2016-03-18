@@ -17,13 +17,15 @@ function Deploy_Ceph_RGW()
     mkdir -p ${MY_CLUSTER_DIR}
     cd ${MY_CLUSTER_DIR}
 
-    ${CEPH_BIN_DIR}ceph-authtool --create-keyring ${MY_CLUSTER_DIR}/keyring --gen-key -n mon. --cap mon 'allow *'
-    ${CEPH_BIN_DIR}ceph-authtool --gen-key --name=client.admin --set-uid=0 --cap mon 'allow *' --cap osd 'allow *' --cap mds 'allow *' ${MY_CLUSTER_DIR}/keyring
-    ${CEPH_BIN_DIR}monmaptool --create --clobber --add a ${CEPH_LOCAL_HOSTIP}:${CEPH_LOCAL_PORT} --print ${MY_CLUSTER_DIR}/ceph_monmap.17607
-
     mkdir -p ${MY_CLUSTER_DIR}/dev
     rm -rf ${MY_CLUSTER_DIR}/dev/mon.a
     mkdir -p ${MY_CLUSTER_DIR}/dev/mon.a
+
+    cd ${MY_CLUSTER_DIR}
+
+    ${CEPH_BIN_DIR}ceph-authtool --create-keyring ${MY_CLUSTER_DIR}/keyring --gen-key -n mon. --cap mon 'allow *'
+    ${CEPH_BIN_DIR}ceph-authtool --gen-key --name=client.admin --set-uid=0 --cap mon 'allow *' --cap osd 'allow *' --cap mds 'allow *' ${MY_CLUSTER_DIR}/keyring
+    ${CEPH_BIN_DIR}monmaptool --create --clobber --add a ${CEPH_LOCAL_HOSTIP}:${CEPH_MON_PORT} --print ${MY_CLUSTER_DIR}/ceph_monmap.17607    
 
     # Generate the "fsid" use in ceph.conf.
     local fsid=$(Get_UUID)
@@ -110,20 +112,28 @@ function Deploy_Ceph_RGW()
 [mon.a]
     host = ${CEPH_LOCAL_HOSTNAME}
     mon_data = ${MY_CLUSTER_DIR}/dev/mon.a
-    mon_addr = ${CEPH_LOCAL_HOSTIP}:${CEPH_LOCAL_PORT}
+    mon_addr = ${CEPH_LOCAL_HOSTIP}:${CEPH_MON_PORT}
 
 [osd.0]
     host = ${CEPH_LOCAL_HOSTNAME}
+    ms_bind_port_min = 6800
+    ms_bind_port_max = 7100
+
 [osd.1]
     host = ${CEPH_LOCAL_HOSTNAME}
+    ms_bind_port_min = 6800
+    ms_bind_port_max = 7100
+
 [osd.2]
     host = ${CEPH_LOCAL_HOSTNAME}
+    ms_bind_port_min = 6800
+    ms_bind_port_max = 7100
 
 [client.radosgw.gateway]
     host = ${CEPH_RADOSGW_HOST}
     keyring = ${MY_CLUSTER_DIR}/dev/rgw/keyring
-    rgw_socket_path = /tmp/radosgw.sock
-    log_file = /var/log/radosgw/radosgw.log
+    rgw_socket_path = /tmp/\$cluster/radosgw.sock
+    log_file = /var/log/radosgw/\$cluster/radosgw.log
     rgw_frontends = "civetweb port=${CIVETWEB_PORT}"
 EOF
 
