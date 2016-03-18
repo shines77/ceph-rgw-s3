@@ -245,20 +245,127 @@ function Stop_Ceph_RGW()
     Kill_Ceph_Processes
 }
 
-function Create_Ceph_Users()
+function Create_Ceph_1_Users()
 {
     mkdir -p ${MY_CLUSTER_DIR}
     cd ${MY_CLUSTER_DIR}
 
-    mkdir -p ${CEPH_BIN_DIR}
-    cd ${CEPH_BIN_DIR}
+    ${CEPH_BIN_DIR}radosgw-admin -c ${MY_CLUSTER_DIR}/ceph.conf user create --uid=test1 --display-name="test1" --email=test1@example.com
+}
 
-    ${CEPH_BIN_DIR}radosgw-admin user create --uid=test1 --display-name="test1" --email=test1@example.com
-    ${CEPH_BIN_DIR}radosgw-admin user create --uid=test2 --display-name="test2" --email=test2@example.com
-    ${CEPH_BIN_DIR}radosgw-admin user create --uid=test3 --display-name="test3" --email=test3@example.com
-    ${CEPH_BIN_DIR}radosgw-admin user create --uid=test4 --display-name="test4" --email=test4@example.com
-    ${CEPH_BIN_DIR}radosgw-admin user create --uid=test5 --display-name="test5" --email=test5@example.com
-    ${CEPH_BIN_DIR}radosgw-admin user create --uid=test6 --display-name="test6" --email=test6@example.com
-    ${CEPH_BIN_DIR}radosgw-admin user create --uid=test7 --display-name="test7" --email=test7@example.com
-    ${CEPH_BIN_DIR}radosgw-admin user create --uid=test8 --display-name="test8" --email=test8@example.com
+function Create_Ceph_4_Users()
+{
+    mkdir -p ${MY_CLUSTER_DIR}
+    cd ${MY_CLUSTER_DIR}
+
+    ${CEPH_BIN_DIR}radosgw-admin -c ${MY_CLUSTER_DIR}/ceph.conf user create --uid=test1 --display-name="test1" --email=test1@example.com
+    ${CEPH_BIN_DIR}radosgw-admin -c ${MY_CLUSTER_DIR}/ceph.conf user create --uid=test2 --display-name="test2" --email=test2@example.com
+    ${CEPH_BIN_DIR}radosgw-admin -c ${MY_CLUSTER_DIR}/ceph.conf user create --uid=test3 --display-name="test3" --email=test3@example.com
+    ${CEPH_BIN_DIR}radosgw-admin -c ${MY_CLUSTER_DIR}/ceph.conf user create --uid=test4 --display-name="test4" --email=test4@example.com    
+}
+
+function Create_Ceph_6_Users()
+{
+    mkdir -p ${MY_CLUSTER_DIR}
+    cd ${MY_CLUSTER_DIR}
+
+    ${CEPH_BIN_DIR}radosgw-admin -c ${MY_CLUSTER_DIR}/ceph.conf user create --uid=test1 --display-name="test1" --email=test1@example.com
+    ${CEPH_BIN_DIR}radosgw-admin -c ${MY_CLUSTER_DIR}/ceph.conf user create --uid=test2 --display-name="test2" --email=test2@example.com
+    ${CEPH_BIN_DIR}radosgw-admin -c ${MY_CLUSTER_DIR}/ceph.conf user create --uid=test3 --display-name="test3" --email=test3@example.com
+    ${CEPH_BIN_DIR}radosgw-admin -c ${MY_CLUSTER_DIR}/ceph.conf user create --uid=test4 --display-name="test4" --email=test4@example.com
+    ${CEPH_BIN_DIR}radosgw-admin -c ${MY_CLUSTER_DIR}/ceph.conf user create --uid=test5 --display-name="test5" --email=test5@example.com
+    ${CEPH_BIN_DIR}radosgw-admin -c ${MY_CLUSTER_DIR}/ceph.conf user create --uid=test6 --display-name="test6" --email=test6@example.com
+}
+
+function Create_Ceph_8_Users()
+{
+    mkdir -p ${MY_CLUSTER_DIR}
+    cd ${MY_CLUSTER_DIR}
+
+    ${CEPH_BIN_DIR}radosgw-admin -c ${MY_CLUSTER_DIR}/ceph.conf user create --uid=test1 --display-name="test1" --email=test1@example.com
+    ${CEPH_BIN_DIR}radosgw-admin -c ${MY_CLUSTER_DIR}/ceph.conf user create --uid=test2 --display-name="test2" --email=test2@example.com
+    ${CEPH_BIN_DIR}radosgw-admin -c ${MY_CLUSTER_DIR}/ceph.conf user create --uid=test3 --display-name="test3" --email=test3@example.com
+    ${CEPH_BIN_DIR}radosgw-admin -c ${MY_CLUSTER_DIR}/ceph.conf user create --uid=test4 --display-name="test4" --email=test4@example.com
+    ${CEPH_BIN_DIR}radosgw-admin -c ${MY_CLUSTER_DIR}/ceph.conf user create --uid=test5 --display-name="test5" --email=test5@example.com
+    ${CEPH_BIN_DIR}radosgw-admin -c ${MY_CLUSTER_DIR}/ceph.conf user create --uid=test6 --display-name="test6" --email=test6@example.com
+    ${CEPH_BIN_DIR}radosgw-admin -c ${MY_CLUSTER_DIR}/ceph.conf user create --uid=test7 --display-name="test7" --email=test7@example.com
+    ${CEPH_BIN_DIR}radosgw-admin -c ${MY_CLUSTER_DIR}/ceph.conf user create --uid=test8 --display-name="test8" --email=test8@example.com
+}
+
+function Create_Ceph_10_Users()
+{
+    mkdir -p ${MY_CLUSTER_DIR}
+    cd ${MY_CLUSTER_DIR}
+
+    ${CEPH_BIN_DIR}radosgw-admin -c ${MY_CLUSTER_DIR}/ceph.conf user create --uid=test1 --display-name="test1" --email=test1@example.com
+    ${CEPH_BIN_DIR}radosgw-admin -c ${MY_CLUSTER_DIR}/ceph.conf user create --uid=test2 --display-name="test2" --email=test2@example.com
+    ${CEPH_BIN_DIR}radosgw-admin -c ${MY_CLUSTER_DIR}/ceph.conf user create --uid=test3 --display-name="test3" --email=test3@example.com
+    ${CEPH_BIN_DIR}radosgw-admin -c ${MY_CLUSTER_DIR}/ceph.conf user create --uid=test4 --display-name="test4" --email=test4@example.com
+    ${CEPH_BIN_DIR}radosgw-admin -c ${MY_CLUSTER_DIR}/ceph.conf user create --uid=test5 --display-name="test5" --email=test5@example.com
+    ${CEPH_BIN_DIR}radosgw-admin -c ${MY_CLUSTER_DIR}/ceph.conf user create --uid=test6 --display-name="test6" --email=test6@example.com
+    ${CEPH_BIN_DIR}radosgw-admin -c ${MY_CLUSTER_DIR}/ceph.conf user create --uid=test7 --display-name="test7" --email=test7@example.com
+    ${CEPH_BIN_DIR}radosgw-admin -c ${MY_CLUSTER_DIR}/ceph.conf user create --uid=test8 --display-name="test8" --email=test8@example.com
+    ${CEPH_BIN_DIR}radosgw-admin -c ${MY_CLUSTER_DIR}/ceph.conf user create --uid=test9 --display-name="test9" --email=test7@example.com
+    ${CEPH_BIN_DIR}radosgw-admin -c ${MY_CLUSTER_DIR}/ceph.conf user create --uid=test10 --display-name="test10" --email=test8@example.com    
+}
+
+function Create_User_Select()
+{
+    local deploy_now=0
+    CreateUserSelect=4
+    echo ""
+    Echo_Yellow "You have 6 options for ceph and rados-gw:"
+    echo ""
+    echo "  1) Create  1 ceph users and keys."
+    echo "  2) Create  4 ceph users and keys."
+    echo "  3) Create  6 ceph users and keys."
+    Echo_Cyan "* 4) Create  8 ceph users and keys. (default)"
+    echo "  5) Create 10 ceph users and keys."
+    echo "  6) Exit."
+    echo ""
+    read -p "Enter your choice: [1-6] ? " CreateUserSelect
+
+    echo ""
+    case "${CreateUserSelect}" in
+        1)
+            Echo_Cyan "It will create 1 ceph users and keys."
+            ;;
+        2)
+            Echo_Cyan "It will create 4 ceph users and keys."
+            ;;
+        3)
+            Echo_Cyan "It will create 6 ceph users and keys."
+            ;;
+        4)
+            Echo_Cyan "It will create 8 ceph users and keys."
+            ;;
+        5)
+            Echo_Cyan "It will create 10 ceph users and keys."
+            ;;
+        *)
+            Echo_Cyan "Don't create ceph users and key, and exit."
+            CreateUserSelect=6
+            ;;
+    esac
+    echo ""
+
+    if [ "${CreateUserSelect}" == "1" ]; then
+        Create_Ceph_1_Users
+    elif [ "${CreateUserSelect}" == "2" ]; then
+        Create_Ceph_4_Users
+    elif [ "${CreateUserSelect}" == "3" ]; then
+        Create_Ceph_6_Users
+    elif [ "${CreateUserSelect}" == "4" ]; then
+        Create_Ceph_8_Users
+    elif [ "${CreateUserSelect}" == "5" ]; then
+        Create_Ceph_10_Users
+    else
+        # do nothing and exit.
+        exit
+    fi
+}
+
+function Create_Ceph_Users()
+{
+    Create_User_Select
 }
