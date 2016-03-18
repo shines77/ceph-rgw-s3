@@ -317,11 +317,12 @@ function Create_User_Select()
     Echo_Yellow "You have 6 options for ceph and rados-gw:"
     echo ""
     echo "  1) Create  1 ceph users and keys."
-    echo "  2) Create  4 ceph users and keys."
-    echo "  3) Create  6 ceph users and keys."
-    Echo_Cyan "* 4) Create  8 ceph users and keys. (default)"
-    echo "  5) Create 10 ceph users and keys."
-    echo "  6) Exit."
+    echo "  2) Create  2 ceph users and keys."
+    echo "  3) Create  4 ceph users and keys."
+    echo "  4) Create  6 ceph users and keys."
+    Echo_Cyan "* 5) Create  8 ceph users and keys. (default)"
+    echo "  6) Create 10 ceph users and keys."
+    echo "  7) Exit."
     echo ""
     read -p "Enter your choice: [1-6] ? " CreateUserSelect
 
@@ -334,17 +335,20 @@ function Create_User_Select()
             Echo_Cyan "It will create 4 ceph users and keys."
             ;;
         3)
-            Echo_Cyan "It will create 6 ceph users and keys."
+            Echo_Cyan "It will create 4 ceph users and keys."
             ;;
         4)
-            Echo_Cyan "It will create 8 ceph users and keys."
+            Echo_Cyan "It will create 6 ceph users and keys."
             ;;
         5)
+            Echo_Cyan "It will create 8 ceph users and keys."
+            ;;
+        6)
             Echo_Cyan "It will create 10 ceph users and keys."
             ;;
         *)
             Echo_Cyan "Don't create ceph users and key, and exit."
-            CreateUserSelect=6
+            CreateUserSelect=7
             ;;
     esac
     echo ""
@@ -352,12 +356,14 @@ function Create_User_Select()
     if [ "${CreateUserSelect}" == "1" ]; then
         Create_Ceph_1_Users
     elif [ "${CreateUserSelect}" == "2" ]; then
-        Create_Ceph_4_Users
+        Create_Ceph_2_Users
     elif [ "${CreateUserSelect}" == "3" ]; then
-        Create_Ceph_6_Users
+        Create_Ceph_4_Users
     elif [ "${CreateUserSelect}" == "4" ]; then
-        Create_Ceph_8_Users
+        Create_Ceph_6_Users
     elif [ "${CreateUserSelect}" == "5" ]; then
+        Create_Ceph_8_Users
+    elif [ "${CreateUserSelect}" == "6" ]; then
         Create_Ceph_10_Users
     else
         # do nothing and exit.
