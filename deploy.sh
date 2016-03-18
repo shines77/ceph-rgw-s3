@@ -37,7 +37,7 @@ function Deploy_Confirm()
     echo "  Y) Deploy ceph and rados-gw now."
     Echo_Cyan "* N) Deploy later and exit. (default)"
     echo ""
-    Echo_Magenta "(Becareful, deploy now will destroy your all osd data, users and keys !!)"
+    Echo_Magenta "(Becareful, deploy now will destroy all of your osd data, users and keys !!)"
     echo ""
     read -p "Enter your choice: [y/N] ? " ConfirmSelect
 
