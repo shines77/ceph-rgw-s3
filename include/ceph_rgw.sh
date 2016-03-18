@@ -312,19 +312,18 @@ function Create_Ceph_10_Users()
 function Create_User_Select()
 {
     local deploy_now=0
-    CreateUserSelect=4
     echo ""
-    Echo_Yellow "You have 6 options for ceph and rados-gw:"
+    Echo_Yellow "You have 7 options for ceph and rados-gw:"
     echo ""
     echo "  1) Create  1 ceph users and keys."
     echo "  2) Create  2 ceph users and keys."
     echo "  3) Create  4 ceph users and keys."
     echo "  4) Create  6 ceph users and keys."
-    Echo_Cyan "* 5) Create  8 ceph users and keys. (default)"
+    echo "  5) Create  8 ceph users and keys."
     echo "  6) Create 10 ceph users and keys."
-    echo "  7) Exit."
+    Echo_Cyan "* 7) Exit. (default)"
     echo ""
-    read -p "Enter your choice: [1-6] ? " CreateUserSelect
+    read -p "Enter your choice: [1-7] ? " CreateUserSelect
 
     echo ""
     case "${CreateUserSelect}" in
