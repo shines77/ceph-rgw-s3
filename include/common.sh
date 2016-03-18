@@ -60,4 +60,5 @@ function Show_Ceph_HostInfo()
     echo "CEPH_LOCAL_HOSTNAME = ${CEPH_LOCAL_HOSTNAME}"
     echo "CEPH_LOCAL_HOSTIP   = ${CEPH_LOCAL_HOSTIP}"
     echo "CEPH_LOCAL_PORT     = ${CEPH_LOCAL_PORT}"
+    echo "CEPH_MON_PORT       = ${CEPH_MON_PORT}"
 }
