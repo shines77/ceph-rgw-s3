@@ -189,7 +189,7 @@ EOF
     ${CEPH_BIN_DIR}ceph-authtool -n client.radosgw.gateway --cap osd 'allow rwx' --cap mon 'allow rw' ${MY_CLUSTER_DIR}/dev/rgw/keyring
     ${CEPH_BIN_DIR}ceph -k ${MY_CLUSTER_DIR}/keyring auth add client.radosgw.gateway -i ${MY_CLUSTER_DIR}/dev/rgw/keyring
 
-    ${CEPH_BIN_DIR}radosgw --id=radosgw.gateway
+    ## ${CEPH_BIN_DIR}radosgw --id=radosgw.gateway
     ${CEPH_BIN_DIR}radosgw -c ${MY_CLUSTER_DIR}/ceph.conf --keyring=${MY_CLUSTER_DIR}/dev/rgw/keyring --id=radosgw.gateway -d
 
     ## ${CEPH_BIN_DIR}radosgw-admin user create --uid=s3_test --display-name="S3 test user" --email=admin@example.com
