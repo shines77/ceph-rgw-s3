@@ -32,4 +32,4 @@ CEPH_RADOSGW_HOST=""
 CEPH_RADOSGW_PORT=""
 
 # Radosgw's http server port, default is 8000, or example: "18001;18002;18003".
-CIVETWEB_PORT="18001"
+CIVETWEB_PORT="8080"

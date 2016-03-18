@@ -39,7 +39,7 @@ fi
 
 # Set $CEPH_LOCAL_PORT
 if [ -z "${CEPH_LOCAL_PORT}" ]; then
-    CEPH_LOCAL_PORT="6789"
+    CEPH_LOCAL_PORT="6000"
 fi
 
 # Set $CEPH_MON_PORT
